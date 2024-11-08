@@ -3,99 +3,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ClockIcon, LuggageIcon, MapPinIcon, StarIcon } from "lucide-react";
 import Search from "@/components/pages/home/search";
+import FeaturedDestinations from "@/components/pages/home/featured-destinations";
 
 export default function Home() {
   return (
     <main>
       <Search />
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                Featured Destinations
-              </h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                {`Explore the world's most popular travel destinations.`}
-              </p>
-            </div>
-          </div>
-          <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            <Link
-              href="#"
-              className="group relative overflow-hidden rounded-lg"
-              prefetch={false}
-            >
-              <img
-                src="/placeholder.svg"
-                width={600}
-                height={400}
-                alt="Destination"
-                className="aspect-[3/2] w-full object-cover transition-all group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute bottom-4 left-4 text-white">
-                <h3 className="text-lg font-semibold">Paris</h3>
-                <p className="text-sm">France</p>
-              </div>
-            </Link>
-            <Link
-              href="#"
-              className="group relative overflow-hidden rounded-lg"
-              prefetch={false}
-            >
-              <img
-                src="/placeholder.svg"
-                width={600}
-                height={400}
-                alt="Destination"
-                className="aspect-[3/2] w-full object-cover transition-all group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute bottom-4 left-4 text-white">
-                <h3 className="text-lg font-semibold">New York</h3>
-                <p className="text-sm">United States</p>
-              </div>
-            </Link>
-            <Link
-              href="#"
-              className="group relative overflow-hidden rounded-lg"
-              prefetch={false}
-            >
-              <img
-                src="/placeholder.svg"
-                width={600}
-                height={400}
-                alt="Destination"
-                className="aspect-[3/2] w-full object-cover transition-all group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute bottom-4 left-4 text-white">
-                <h3 className="text-lg font-semibold">Tokyo</h3>
-                <p className="text-sm">Japan</p>
-              </div>
-            </Link>
-            <Link
-              href="#"
-              className="group relative overflow-hidden rounded-lg"
-              prefetch={false}
-            >
-              <img
-                src="/placeholder.svg"
-                width={600}
-                height={400}
-                alt="Destination"
-                className="aspect-[3/2] w-full object-cover transition-all group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute bottom-4 left-4 text-white">
-                <h3 className="text-lg font-semibold">London</h3>
-                <p className="text-sm">United Kingdom</p>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
+      <FeaturedDestinations />
       <section className="w-full bg-muted py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
