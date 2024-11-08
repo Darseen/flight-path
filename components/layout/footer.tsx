@@ -1,65 +1,47 @@
-import { FacebookIcon, InstagramIcon, TwitterIcon } from "lucide-react";
+import {
+  FacebookIcon,
+  GithubIcon,
+  InstagramIcon,
+  TwitterIcon,
+} from "lucide-react";
 import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1a1a1a] text-white py-8">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center">
-        <nav className="flex flex-wrap justify-center sm:justify-start gap-4 mb-6 sm:mb-0">
+    <footer className="bg-[#1a1a1a] py-8 text-white">
+      <div className="container mx-auto flex flex-col items-center justify-between px-4 sm:flex-row sm:px-6 lg:px-8">
+        <nav className="mb-6 flex flex-wrap justify-center gap-4 sm:mb-0 sm:justify-start">
           <Link
-            href="#"
-            className="text-sm font-medium hover:text-[#00b894]"
+            href="/"
+            className="text-sm font-medium hover:text-cyan-500"
             prefetch={false}
           >
             Home
           </Link>
           <Link
             href="#"
-            className="text-sm font-medium hover:text-[#00b894]"
+            className="text-sm font-medium hover:text-cyan-500"
             prefetch={false}
           >
             Flights
           </Link>
           <Link
-            href="#"
-            className="text-sm font-medium hover:text-[#00b894]"
+            href="/about"
+            className="text-sm font-medium hover:text-cyan-500"
             prefetch={false}
           >
             About
           </Link>
           <Link
             href="#"
-            className="text-sm font-medium hover:text-[#00b894]"
+            className="text-sm font-medium hover:text-cyan-500"
             prefetch={false}
           >
             Contact
           </Link>
         </nav>
-        <div className="flex items-center space-x-4">
-          <Link
-            href="#"
-            className="text-[#00b894] hover:text-white"
-            prefetch={false}
-          >
-            <FacebookIcon className="h-5 w-5" />
-          </Link>
-          <Link
-            href="#"
-            className="text-[#00b894] hover:text-white"
-            prefetch={false}
-          >
-            <TwitterIcon className="h-5 w-5" />
-          </Link>
-          <Link
-            href="#"
-            className="text-[#00b894] hover:text-white"
-            prefetch={false}
-          >
-            <InstagramIcon className="h-5 w-5" />
-          </Link>
-        </div>
       </div>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-6 text-center text-sm text-[#999999]">
+      <div className="container mx-auto mt-6 px-4 text-center text-sm text-[#999999] sm:px-6 lg:px-8">
         &copy; 2024 Flight Path. All rights reserved.
       </div>
     </footer>
