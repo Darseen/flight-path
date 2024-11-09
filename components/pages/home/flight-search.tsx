@@ -18,8 +18,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { FlightSearch, FlightSearchSchema } from "@/lib/zod/search";
-import { CalendarIcon } from "lucide-react";
+import {
+  FlightSearch as FlightSearchType,
+  FlightSearchSchema,
+} from "@/lib/zod/search";
+import { CalendarIcon, Minus, Plus } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -31,11 +34,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { Label } from "@/components/ui/label";
 
-export default function Search() {
+export default function FlightSearch() {
   const { toast } = useToast();
 
-  const form = useForm<FlightSearch>({
+  const form = useForm<FlightSearchType>({
     resolver: zodResolver(FlightSearchSchema),
     defaultValues: {
       originLocationCode: "",
@@ -52,8 +56,7 @@ export default function Search() {
     },
   });
 
-  const onSubmit = (data: FlightSearch) => {
-    console.log("submitted");
+  const onSubmit = (data: FlightSearchType) => {
     toast({
       title: "You submitted the following values:",
       description: (
@@ -63,8 +66,6 @@ export default function Search() {
       ),
     });
   };
-
-  console.log(form.formState.errors);
 
   return (
     <section className="relative">
@@ -81,7 +82,7 @@ export default function Search() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="max-w-4xl rounded-lg bg-white p-4 sm:p-6 shadow-lg dark:bg-transparent/50"
+            className="max-w-4xl rounded-lg bg-white p-4 shadow-lg dark:bg-transparent/50 sm:p-6"
           >
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
               <FormField
@@ -123,7 +124,7 @@ export default function Search() {
                             variant="outline"
                             className={cn(
                               "w-full text-left font-normal",
-                              !field.value && "text-muted-foreground"
+                              !field.value && "text-muted-foreground",
                             )}
                           >
                             {field.value ? (
@@ -163,7 +164,7 @@ export default function Search() {
                             variant="outline"
                             className={cn(
                               "w-full text-left font-normal",
-                              !field.value && "text-muted-foreground"
+                              !field.value && "text-muted-foreground",
                             )}
                             disabled={!form.getValues("twoWay")}
                           >
@@ -258,9 +259,154 @@ export default function Search() {
                   </FormItem>
                 )}
               />
+
+              {/* Passengers */}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline">Passengers</Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-80">
+                  <div className="grid gap-4">
+                    <div className="space-y-2">
+                      <h4 className="font-medium leading-none">Passengers</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Select number of passengers.
+                      </p>
+                    </div>
+                    <div className="grid gap-2">
+                      <FormField
+                        control={form.control}
+                        name="adults"
+                        render={({ field }) => (
+                          <FormItem className="flex items-center justify-between">
+                            <FormLabel>{`Adults ( > 12)`}</FormLabel>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                onClick={() =>
+                                  form.setValue(
+                                    "adults",
+                                    form.getValues("adults") + 1,
+                                  )
+                                }
+                              >
+                                <Plus />
+                              </Button>
+                              <FormControl>
+                                <Input
+                                  type="number"
+                                  className="w-16 text-center"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <Button
+                                onClick={() => {
+                                  const value = form.getValues("adults");
+                                  if (value > 0) {
+                                    form.setValue(
+                                      "adults",
+                                      form.getValues("adults") - 1,
+                                    );
+                                  }
+                                }}
+                              >
+                                <Minus />
+                              </Button>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="children"
+                        render={({ field }) => (
+                          <FormItem className="flex items-center justify-between">
+                            <FormLabel>{`Children (12 ~ 2)`}</FormLabel>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                onClick={() =>
+                                  form.setValue(
+                                    "children",
+                                    form.getValues("children") + 1,
+                                  )
+                                }
+                              >
+                                <Plus />
+                              </Button>
+                              <FormControl>
+                                <Input
+                                  type="number"
+                                  className="w-16 text-center"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <Button
+                                onClick={() => {
+                                  const value = form.getValues("children");
+                                  if (value > 0) {
+                                    form.setValue(
+                                      "children",
+                                      form.getValues("children") - 1,
+                                    );
+                                  }
+                                }}
+                              >
+                                <Minus />
+                              </Button>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="infants"
+                        render={({ field }) => (
+                          <FormItem className="flex items-center justify-between">
+                            <FormLabel>{`Infants (< 2)`}</FormLabel>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                onClick={() =>
+                                  form.setValue(
+                                    "infants",
+                                    form.getValues("infants") + 1,
+                                  )
+                                }
+                              >
+                                <Plus />
+                              </Button>
+                              <FormControl>
+                                <Input
+                                  type="number"
+                                  className="w-16 text-center"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <Button
+                                onClick={() => {
+                                  const value = form.getValues("infants");
+                                  if (value > 0) {
+                                    form.setValue(
+                                      "infants",
+                                      form.getValues("infants") - 1,
+                                    );
+                                  }
+                                }}
+                              >
+                                <Minus />
+                              </Button>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
             </fieldset>
             <div className="mt-4">
-              <Button type="submit" size="lg" className="w-full ">
+              <Button type="submit" size="lg" className="w-full">
                 Search Flights
               </Button>
             </div>
