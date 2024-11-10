@@ -19,14 +19,22 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
+type Filters = {
+  maxPrice: number;
+  stops: string;
+  airline: string;
+};
+
 interface Props {
-  filters: any;
-  handleFilterChange: any;
-  applyFilters: any;
+  filters: Filters;
+  airlines: string[];
+  handleFilterChange: (key: keyof Filters, value: string | number) => void;
+  applyFilters: () => void;
 }
 
 export default function SidebarFilter({
   filters,
+  airlines,
   handleFilterChange,
   applyFilters,
 }: Props) {
@@ -54,7 +62,7 @@ export default function SidebarFilter({
                   placeholder="Max Price"
                   value={filters.maxPrice}
                   onChange={(e) =>
-                    handleFilterChange("maxPrice", e.target.value)
+                    handleFilterChange("maxPrice", parseFloat(e.target.value))
                   }
                   className="w-full"
                 />
@@ -91,6 +99,12 @@ export default function SidebarFilter({
                     1 stop
                   </Label>
                 </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="2+" id="multistop" />
+                  <Label htmlFor="multistop" className="text-sm">
+                    2+ stops
+                  </Label>
+                </div>
               </RadioGroup>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -109,19 +123,15 @@ export default function SidebarFilter({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="any">Any</SelectItem>
-                  <SelectItem value="Skyline Airways">
-                    Skyline Airways
-                  </SelectItem>
-                  <SelectItem value="Ocean Air">Ocean Air</SelectItem>
-                  <SelectItem value="Global Wings">Global Wings</SelectItem>
+                  {airlines.map((airline) => (
+                    <SelectItem key={airline} value={airline}>
+                      {airline}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </SidebarGroupContent>
           </SidebarGroup>
-
-          <Button onClick={applyFilters} className="w-full">
-            Apply Filters
-          </Button>
         </div>
       </SidebarContent>
     </Sidebar>
