@@ -44,7 +44,7 @@ export default function FlightCard({ flight }: Props) {
           </div>
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-3">
+      <CardContent>
         {/* Mobile Layout */}
         <div className="items flex flex-col gap-4 lg:hidden">
           <div className="grid grid-cols-3 gap-2">
