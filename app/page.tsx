@@ -1,7 +1,7 @@
-import FlightSearch from "@/components/pages/home/flight-search";
-import FeaturedDestinations from "@/components/pages/home/featured-destinations";
-import TravelTips from "@/components/pages/home/travel-tips";
-import Comments from "@/components/pages/home/comments";
+import FlightSearch from "@/components/home/flight-search";
+import FeaturedDestinations from "@/components/home/featured-destinations";
+import TravelTips from "@/components/home/travel-tips";
+import Comments from "@/components/home/comments";
 
 export default function Home() {
   return (

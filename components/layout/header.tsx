@@ -21,8 +21,10 @@ import { Separator } from "@/components/ui/separator";
 import ThemeToggle from "../theme-toggle";
 
 const navItems = [
+  { title: "Home", href: "/" },
   { title: "Flights", href: "#" },
   { title: "About", href: "/about" },
+  { title: "project", href: "https://github.com/darseen/flight-path" },
 ];
 
 export default function Navbar() {

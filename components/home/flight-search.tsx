@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/form";
 import {
   FlightSearch as FlightSearchType,
-  FlightSearchSchema,
+  flightSearchSchema,
 } from "@/lib/zod/search";
 import { CalendarIcon, Minus, Plus } from "lucide-react";
 import { format } from "date-fns";
@@ -34,13 +34,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Label } from "@/components/ui/label";
+import { useRouter } from "next/navigation";
 
 export default function FlightSearch() {
   const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<FlightSearchType>({
-    resolver: zodResolver(FlightSearchSchema),
+    resolver: zodResolver(flightSearchSchema),
     defaultValues: {
       originLocationCode: "",
       destinationLocationCode: "",
@@ -65,6 +66,18 @@ export default function FlightSearch() {
         </pre>
       ),
     });
+
+    const stringifiedParams = Object.entries(data).reduce<
+      Record<string, string>
+    >((acc, [key, value]) => {
+      if (value) {
+        acc[key] = String(value); // Convert each value to a string
+      }
+      return acc;
+    }, {});
+
+    const searchParams = new URLSearchParams(stringifiedParams).toString();
+    router.push(`/search/flights?${searchParams}`);
   };
 
   return (
@@ -235,10 +248,7 @@ export default function FlightSearch() {
                 name="travelClass"
                 render={({ field }) => (
                   <FormItem>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
+                    <Select onValueChange={field.onChange}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Travel Class" />
@@ -246,7 +256,7 @@ export default function FlightSearch() {
                       </FormControl>
 
                       <SelectContent>
-                        <SelectItem value="ANY">Any</SelectItem>
+                        <SelectItem value={"ANY"}>ANY</SelectItem>
                         <SelectItem value="ECONOMY">Economy</SelectItem>
                         <SelectItem value="PREMIUM_ECONOMY">
                           Premium Economy

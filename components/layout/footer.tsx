@@ -1,9 +1,3 @@
-import {
-  FacebookIcon,
-  GithubIcon,
-  InstagramIcon,
-  TwitterIcon,
-} from "lucide-react";
 import Link from "next/link";
 
 export default function Footer() {
@@ -33,11 +27,11 @@ export default function Footer() {
             About
           </Link>
           <Link
-            href="#"
+            href="https://github.com/darseen/flight-path"
             className="text-sm font-medium hover:text-cyan-500"
             prefetch={false}
           >
-            Contact
+            Project
           </Link>
         </nav>
       </div>
