@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -18,25 +17,26 @@ import {
   SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { Slider } from "@/components/ui/slider";
 
 type Filters = {
-  maxPrice: number;
   stops: string;
   airline: string;
+  maxPrice: number;
 };
 
 interface Props {
   filters: Filters;
   airlines: string[];
   handleFilterChange: (key: keyof Filters, value: string | number) => void;
-  applyFilters: () => void;
+  maxPrice: number;
 }
 
 export default function SidebarFilter({
   filters,
   airlines,
   handleFilterChange,
-  applyFilters,
+  maxPrice,
 }: Props) {
   const { isMobile } = useSidebar();
 
@@ -57,16 +57,16 @@ export default function SidebarFilter({
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <div className="flex items-center space-x-2">
-                <Input
-                  type="number"
-                  placeholder="Max Price"
-                  value={filters.maxPrice}
-                  onChange={(e) =>
-                    handleFilterChange("maxPrice", parseFloat(e.target.value))
+                <Slider
+                  value={[filters.maxPrice]}
+                  max={maxPrice}
+                  step={50}
+                  onValueChange={(value) =>
+                    handleFilterChange("maxPrice", value[0])
                   }
                   className="w-full"
                 />
-                <span className="text-sm font-medium">$</span>
+                <span className="text-sm font-medium">${filters.maxPrice}</span>
               </div>
             </SidebarGroupContent>
           </SidebarGroup>

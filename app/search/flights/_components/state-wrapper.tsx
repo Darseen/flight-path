@@ -7,9 +7,9 @@ import { FlightOffer } from "amadeus-ts";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 type Filters = {
-  maxPrice: number;
   stops: string;
   airline: string;
+  maxPrice: number;
 };
 
 interface Props {
@@ -20,21 +20,17 @@ export default function StateWrapper({ flights }: Props) {
   const [filteredFlights, setFilteredFlights] =
     useState<FlightOffer[]>(flights);
   const [filters, setFilters] = useState<Filters>({
-    maxPrice: 10000,
     stops: "any",
     airline: "any",
+    maxPrice: 0,
   });
+  const [maxPrice, setMaxPrice] = useState(0);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const flightsPerPage = 5;
-
-  const airlines = [
-    ...new Set(
-      flights
-        .map((flight) => flight.validatingAirlineCodes?.[0])
-        .filter(Boolean),
-    ),
-  ] as string[];
+  useEffect(() => {
+    const prices = flights.map((offer) => parseFloat(offer.price.total));
+    setMaxPrice(Math.max(...prices));
+    setFilters((prev) => ({ ...prev, maxPrice: Math.max(...prices) }));
+  }, [flights]);
 
   const handleFilterChange = (key: keyof Filters, value: string | number) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -67,6 +63,8 @@ export default function StateWrapper({ flights }: Props) {
     applyFilters();
   }, [filters]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const flightsPerPage = 5;
   const totalPages = Math.ceil(filteredFlights.length / flightsPerPage);
 
   const paginatedFlights = filteredFlights.slice(
@@ -80,14 +78,22 @@ export default function StateWrapper({ flights }: Props) {
     }
   };
 
+  const airlines = [
+    ...new Set(
+      flights
+        .map((flight) => flight.validatingAirlineCodes?.[0])
+        .filter(Boolean),
+    ),
+  ] as string[];
+
   return (
     <SidebarProvider>
       <div className="flex w-full lg:flex-row lg:justify-between">
         <SidebarFilter
-          applyFilters={applyFilters}
           filters={filters}
           airlines={airlines}
           handleFilterChange={handleFilterChange}
+          maxPrice={maxPrice}
         />
         <FlightsList
           flights={paginatedFlights}
